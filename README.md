@@ -1,171 +1,83 @@
 # NoSnooze
 
-NoSnooze is an Android smart alarm application designed to help users wake up properly and avoid falling back asleep after dismissing an alarm.
+NoSnooze is an Android alarm app that makes waking up harder to ignore.
 
-Instead of allowing the user to stop or snooze the alarm immediately, the application requires the user to get out of bed and hold a push-up position for 15 seconds. The position is verified using the front camera and Google ML Kit Pose Detection.
+Instead of letting the user dismiss the alarm immediately, the app opens the front camera and requires the user to hold a push-up position for 15 seconds. The position is detected in real time using Google ML Kit Pose Detection.
 
-## Project idea
+## Features
 
-The main problem addressed by this project is the habit of stopping or snoozing an alarm while still half asleep.
+- Create and manage multiple alarms
+- Enable or disable alarms individually
+- Select repeat days for each alarm
+- Edit or delete existing alarms
+- Persist alarm settings locally
+- Trigger alarms using Android `AlarmManager`
+- Play the alarm sound continuously until the challenge is completed
+- Open the front camera using CameraX
+- Detect a push-up-like position using ML Kit Pose Detection
+- Require the detected position to be held for 15 seconds
+- Display a success screen after the challenge is completed
 
-NoSnooze tries to solve this by adding a physical challenge before the alarm can be stopped. The user must move, get into position, and stay active long enough to fully wake up.
+## How it works
 
-## Main features
+1. The user creates an alarm and optionally selects repeat days.
+2. Android schedules the alarm using `AlarmManager`.
+3. When the alarm fires, a `BroadcastReceiver` opens the challenge screen.
+4. The alarm sound starts and the front camera is activated.
+5. Camera frames are analyzed using Google ML Kit Pose Detection.
+6. The app checks several body landmarks to determine whether the user is in a push-up-like position.
+7. The position must remain valid for 15 seconds.
+8. Once the challenge is completed, the alarm stops and the success screen is displayed.
 
-- Set an alarm using a time picker
-- Enable or disable the alarm
-- Select repeat days
-- Start an alarm screen when the alarm time is reached
-- Play an alarm sound in a loop
-- Open the front camera
-- Detect a push-up position using pose detection
-- Require the position to be held for 15 seconds
-- Stop the alarm only after the challenge is completed
-- Display a final achievement screen
+## Tech Stack
 
-## Technologies used
+- Java
+- Android SDK
+- XML layouts
+- CameraX
+- Google ML Kit Pose Detection
+- AlarmManager
+- BroadcastReceiver
+- MediaPlayer
+- SharedPreferences
 
-### Java
+## Pose Detection
 
-The main programming language used for the application logic.
+The app uses body landmarks detected by ML Kit to validate a front-facing push-up-like position.
 
-### Android Studio
+The detection logic checks factors such as:
 
-The development environment used to build and test the Android application.
+- shoulder visibility and alignment
+- head position relative to the shoulders
+- wrist position
+- distance between the wrists
+- stability across multiple camera frames
 
-### CameraX
+The goal is not to evaluate professional exercise form, but to make sure the user physically gets out of bed and maintains the required position long enough to dismiss the alarm.
 
-CameraX is used to access the front camera and display a live camera preview inside the application.
+## Project Structure
 
-### Google ML Kit Pose Detection
+`MainActivity`  
+Handles alarm creation, editing, repeat days and alarm management.
 
-ML Kit Pose Detection is used to detect body landmarks from the camera image. In this project, the application mainly uses landmarks such as the nose, shoulders, and wrists.
+`AlarmScheduler`  
+Schedules and cancels alarms using Android `AlarmManager`.
 
-### AlarmManager
+`AlarmReceiver`  
+Receives scheduled alarm events and launches the alarm screen.
 
-AlarmManager is used to schedule the alarm at the selected time.
+`AlarmActivity`  
+Handles the alarm sound, CameraX preview, pose detection and challenge timer.
 
-### BroadcastReceiver
+`SuccessActivity`  
+Displays the result after the challenge is successfully completed.
 
-BroadcastReceiver receives the alarm event triggered by AlarmManager and opens the alarm challenge screen.
+`AlarmStorage`  
+Stores alarm configuration locally.
 
-### MediaPlayer
+## Running the project
 
-MediaPlayer is used to play the alarm sound until the challenge is completed.
+1. Clone the repository.
 
-## Application structure
-
-### MainActivity
-
-MainActivity is the home screen of the application.
-
-It allows the user to:
-
-- view the selected alarm time
-- set a new alarm
-- enable or disable the alarm
-- choose repeat days
-- view the wake-up challenge
-- view simple progress statistics
-
-### AlarmReceiver
-
-AlarmReceiver is triggered when the scheduled alarm time is reached.
-
-Its role is to open AlarmActivity.
-
-### AlarmActivity
-
-AlarmActivity is the main challenge screen.
-
-It handles:
-
-- starting the alarm sound
-- opening the front camera
-- analyzing the camera frames
-- detecting the push-up position
-- counting the 15-second challenge timer
-- stopping the alarm after the challenge is completed
-
-### SuccessActivity
-
-SuccessActivity is the final screen shown after the user completes the challenge.
-
-It displays a short achievement summary and confirms that the alarm has been stopped.
-
-## How the pose detection works
-
-The application uses Google ML Kit Pose Detection to detect body landmarks in real time.
-
-For this project, the goal is not to perfectly validate a professional push-up. Instead, the app checks whether the user is in a front-facing push-up-like position.
-
-The detection logic checks if:
-
-- the shoulders are visible
-- the shoulders are reasonably horizontal
-- the head is near the center of the shoulders
-- the wrists are below the shoulders
-- the wrists are placed far enough apart
-- the position is stable for several frames
-
-If these conditions are met, the app considers the push-up position valid and starts increasing the timer.
-
-## User flow
-
-1. The user opens the application.
-2. The user sets an alarm time.
-3. When the alarm time is reached, the alarm screen opens.
-4. The alarm sound starts playing.
-5. The front camera starts.
-6. The user must hold a push-up position.
-7. If the position is detected, the timer increases.
-8. After 15 seconds, the alarm stops.
-9. The success screen is displayed.
-
-## Current limitations
-
-This application is a student project and a functional prototype, not a production-ready alarm app.
-
-Current limitations include:
-
-- pose detection is approximate
-- the app does not count real push-ups
-- the app does not perfectly validate exercise form
-- detection works best with the user facing the camera
-- good lighting and camera positioning are important
-- alarm persistence after device restart is not fully implemented
-- the statistics are mostly visual/demo data
-
-## Possible future improvements
-
-- Add real push-up counting
-- Improve pose validation accuracy
-- Add multiple wake-up challenges
-- Save statistics locally
-- Add alarm persistence after device restart
-- Add custom alarm sounds
-- Add dark mode
-- Allow the user to customize challenge duration
-- Improve UI animations
-- Add a proper settings screen
-
-## Purpose of the project
-
-The purpose of this project is to demonstrate the use of multiple Android development concepts in one application:
-
-- multiple activities
-- XML-based user interfaces
-- alarm scheduling
-- broadcast receivers
-- camera access
-- real-time image analysis
-- machine learning SDK integration
-- navigation between screens
-
-## Author
-
-Denis Corneanu
-
-## Conclusion
-
-NoSnooze is a smart alarm prototype that turns waking up into an active task. By requiring the user to hold a push-up position before stopping the alarm, the application encourages movement and reduces the chance of going back to sleep.
+```bash
+git clone https://github.com/DenisCorneanu/NoSnooze.git
