@@ -13,6 +13,7 @@ import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.SharedPreferences;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         window.setNavigationBarColor(Color.WHITE);
 
         setContentView(R.layout.activity_main);
+        loadAlarmSettings();
 
         mainClockText = findViewById(R.id.mainClockText);
         firstAlarmTime = findViewById(R.id.firstAlarmTime);
@@ -74,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
 
         firstToggle.setOnClickListener(v -> {
             firstAlarmEnabled = !firstAlarmEnabled;
+
+            saveAlarmSettings();
             updateToggle();
 
             if (firstAlarmEnabled) {
@@ -88,7 +92,13 @@ public class MainActivity extends AppCompatActivity {
 
             dayButtons[i].setOnClickListener(v -> {
                 selectedDays[index] = !selectedDays[index];
+
+                saveAlarmSettings();
                 updateDayButtons();
+
+                if (firstAlarmEnabled) {
+                    scheduleAlarm();
+                }
             });
         }
 
@@ -103,7 +113,10 @@ public class MainActivity extends AppCompatActivity {
                 (view, hourOfDay, minute) -> {
                     alarmHour = hourOfDay;
                     alarmMinute = minute;
+
                     firstAlarmEnabled = true;
+
+                    saveAlarmSettings();
 
                     updateAlarmTime();
                     updateToggle();
@@ -188,59 +201,69 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void scheduleAlarm() {
-        Calendar calendar = Calendar.getInstance();
+        AlarmScheduler.schedule(this);
 
-        calendar.set(Calendar.HOUR_OF_DAY, alarmHour);
-        calendar.set(Calendar.MINUTE, alarmMinute);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-
-        if (calendar.getTimeInMillis() <= System.currentTimeMillis()) {
-            calendar.add(Calendar.DAY_OF_MONTH, 1);
-        }
-
-        Intent intent = new Intent(this, AlarmReceiver.class);
-
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+        Toast.makeText(
                 this,
-                101,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
-        );
-
-        AlarmManager alarmManager =
-                (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
-        if (alarmManager != null) {
-            alarmManager.setExactAndAllowWhileIdle(
-                    AlarmManager.RTC_WAKEUP,
-                    calendar.getTimeInMillis(),
-                    pendingIntent
-            );
-
-            Toast.makeText(this, "Alarma a fost setată", Toast.LENGTH_SHORT).show();
-        }
+                "Alarma a fost setata",
+                Toast.LENGTH_SHORT
+        ).show();
     }
 
     private void cancelAlarm() {
-        Intent intent = new Intent(this, AlarmReceiver.class);
+        AlarmScheduler.cancel(this);
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+        Toast.makeText(
                 this,
-                101,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
-        );
-
-        AlarmManager alarmManager =
-                (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
-        if (alarmManager != null) {
-            alarmManager.cancel(pendingIntent);
-            Toast.makeText(this, "Alarma a fost oprită", Toast.LENGTH_SHORT).show();
-        }
+                "Alarma a fost oprita",
+                Toast.LENGTH_SHORT
+        ).show();
     }
 
+    private void saveAlarmSettings() {
+        SharedPreferences prefs =
+                getSharedPreferences(
+                        AlarmScheduler.PREFS_NAME,
+                        MODE_PRIVATE
+                );
+
+        SharedPreferences.Editor editor = prefs.edit();
+
+        editor.putBoolean("enabled", firstAlarmEnabled);
+        editor.putInt("hour", alarmHour);
+        editor.putInt("minute", alarmMinute);
+
+        for (int i = 0; i < selectedDays.length; i++) {
+            editor.putBoolean("day_" + i, selectedDays[i]);
+        }
+
+        editor.apply();
+    }
+
+    private void loadAlarmSettings() {
+        SharedPreferences prefs =
+                getSharedPreferences(
+                        AlarmScheduler.PREFS_NAME,
+                        MODE_PRIVATE
+                );
+
+        firstAlarmEnabled =
+                prefs.getBoolean("enabled", true);
+
+        alarmHour =
+                prefs.getInt("hour", 7);
+
+        alarmMinute =
+                prefs.getInt("minute", 30);
+
+        for (int i = 0; i < selectedDays.length; i++) {
+            selectedDays[i] =
+                    prefs.getBoolean(
+                            "day_" + i,
+                            selectedDays[i]
+                    );
+        }
+    }
     private int dp(int value) {
         return (int) (value * getResources().getDisplayMetrics().density);
     }

@@ -16,5 +16,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         alarmIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         context.startActivity(alarmIntent);
+
+        AlarmScheduler.scheduleNextRepeat(context);
     }
 }
