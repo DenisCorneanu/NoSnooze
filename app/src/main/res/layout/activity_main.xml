@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/mainScroll"
     android:layout_width="match_parent"
@@ -15,39 +16,36 @@
         android:paddingTop="26dp"
         android:paddingBottom="18dp">
 
-        <!-- Date -->
         <TextView
             android:id="@+id/dateText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="joi, 21 mai"
+            android:text="data"
             android:textColor="#B7B7B7"
             android:textSize="12sp" />
 
-        <!-- Main clock -->
         <TextView
             android:id="@+id/mainClockText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:includeFontPadding="false"
+            android:letterSpacing="-0.055"
             android:text="07:30"
             android:textColor="#111111"
-            android:textSize="62sp"
-            android:letterSpacing="-0.055"
-            android:layout_marginTop="14dp"
-            android:includeFontPadding="false" />
+            android:textSize="62sp" />
 
-        <!-- Next alarm row -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
             android:gravity="center_vertical"
-            android:layout_marginTop="10dp">
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="următoarea în"
+                android:text="status"
                 android:textColor="#A8A8A8"
                 android:textSize="12sp" />
 
@@ -55,278 +53,112 @@
                 android:id="@+id/nextAlarmPill"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="8h 42m"
-                android:textColor="#8A8A8A"
-                android:textSize="10sp"
+                android:layout_marginStart="8dp"
                 android:background="@drawable/bg_small_pill"
                 android:paddingStart="9dp"
-                android:paddingEnd="9dp"
                 android:paddingTop="3dp"
+                android:paddingEnd="9dp"
                 android:paddingBottom="3dp"
-                android:layout_marginStart="8dp" />
+                android:text="activă"
+                android:textColor="#8A8A8A"
+                android:textSize="10sp" />
 
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#EFEFEF"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="16dp"
+            android:background="#EFEFEF" />
 
-        <!-- Header alarme -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:letterSpacing="0.06"
                 android:text="alarme"
                 android:textColor="#B9B9B9"
                 android:textSize="12sp"
-                android:textStyle="bold"
-                android:letterSpacing="0.06" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/addAlarmButton"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
+                android:background="@drawable/bg_add_circle"
                 android:gravity="center"
                 android:text="+"
                 android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                android:background="@drawable/bg_add_circle" />
+                android:textSize="18sp" />
 
         </LinearLayout>
 
-        <!-- Prima alarmă -->
-        <LinearLayout
-            android:id="@+id/firstAlarmRow"
+        <ScrollView
+            android:id="@+id/alarmListScroll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingTop="18dp"
-            android:paddingBottom="11dp">
+            android:fillViewport="false"
+            android:nestedScrollingEnabled="true"
+            android:overScrollMode="ifContentScrolls"
+            android:scrollbars="vertical">
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:id="@+id/alarmListContainer"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="bottom">
+        </ScrollView>
 
-                    <TextView
-                        android:id="@+id/firstAlarmTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="07:30"
-                        android:textColor="#111111"
-                        android:textSize="31sp"
-                        android:letterSpacing="-0.04"
-                        android:includeFontPadding="false" />
-
-                    <TextView
-                        android:id="@+id/firstAlarmAmPm"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="AM"
-                        android:textColor="#BBBBBB"
-                        android:textSize="12sp"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginBottom="3dp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/dayRow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="7dp">
-
-                    <TextView
-                        android:id="@+id/dayL"
-                        style="@style/DayButton"
-                        android:text="L" />
-
-                    <TextView
-                        android:id="@+id/dayMa"
-                        style="@style/DayButton"
-                        android:text="M" />
-
-                    <TextView
-                        android:id="@+id/dayMi"
-                        style="@style/DayButton"
-                        android:text="Mi" />
-
-                    <TextView
-                        android:id="@+id/dayJ"
-                        style="@style/DayButton"
-                        android:text="J" />
-
-                    <TextView
-                        android:id="@+id/dayV"
-                        style="@style/DayButton"
-                        android:text="V" />
-
-                    <TextView
-                        android:id="@+id/dayS"
-                        style="@style/DayButton"
-                        android:text="S" />
-
-                    <TextView
-                        android:id="@+id/dayD"
-                        style="@style/DayButton"
-                        android:text="D" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <FrameLayout
-                android:id="@+id/firstToggle"
-                android:layout_width="42dp"
-                android:layout_height="24dp"
-                android:background="@drawable/bg_toggle_on">
-
-                <View
-                    android:id="@+id/firstToggleDot"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="end|center_vertical"
-                    android:layout_marginEnd="3dp"
-                    android:background="@drawable/bg_toggle_dot_white" />
-
-            </FrameLayout>
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#F1F1F1" />
-
-        <!-- A doua alarmă disabled -->
-        <LinearLayout
-            android:id="@+id/secondAlarmRow"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingTop="12dp"
-            android:paddingBottom="15dp">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="bottom">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="09:00"
-                        android:textColor="#CFCFCF"
-                        android:textSize="28sp"
-                        android:letterSpacing="-0.04"
-                        android:includeFontPadding="false" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="AM"
-                        android:textColor="#DDDDDD"
-                        android:textSize="11sp"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginBottom="3dp" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="o singură dată · mâine"
-                    android:textColor="#CFCFCF"
-                    android:textSize="11sp"
-                    android:layout_marginTop="4dp" />
-
-            </LinearLayout>
-
-            <FrameLayout
-                android:layout_width="42dp"
-                android:layout_height="24dp"
-                android:background="@drawable/bg_toggle_off">
-
-                <View
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="start|center_vertical"
-                    android:layout_marginStart="3dp"
-                    android:background="@drawable/bg_toggle_dot_gray" />
-
-            </FrameLayout>
-
-        </LinearLayout>
-
-        <!-- Challenge card -->
         <LinearLayout
             android:id="@+id/challengeCard"
             android:layout_width="match_parent"
             android:layout_height="84dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
+            android:layout_marginTop="7dp"
             android:background="@drawable/bg_challenge_black"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
             android:paddingStart="18dp"
-            android:paddingEnd="16dp"
-            android:layout_marginTop="7dp">
+            android:paddingEnd="16dp">
 
             <TextView
                 android:layout_width="42dp"
                 android:layout_height="42dp"
+                android:background="@drawable/bg_challenge_icon"
                 android:gravity="center"
                 android:text="🏋"
-                android:textSize="18sp"
-                android:background="@drawable/bg_challenge_icon" />
+                android:textSize="18sp" />
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_marginStart="14dp">
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="oprire prin\nflotări"
+                    android:includeFontPadding="false"
+                    android:text="oprire prin&#10;flotări"
                     android:textColor="#FFFFFF"
                     android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:includeFontPadding="false" />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="15 secunde ·\ncameră față"
+                    android:layout_marginTop="4dp"
+                    android:text="15 secunde ·&#10;cameră față"
                     android:textColor="#999999"
-                    android:textSize="11sp"
-                    android:layout_marginTop="4dp" />
+                    android:textSize="11sp" />
 
             </LinearLayout>
 
@@ -339,13 +171,12 @@
 
         </LinearLayout>
 
-        <!-- Stats -->
         <LinearLayout
             android:id="@+id/statsRow"
             android:layout_width="match_parent"
             android:layout_height="92dp"
-            android:orientation="horizontal"
-            android:layout_marginTop="18dp">
+            android:layout_marginTop="18dp"
+            android:orientation="horizontal">
 
             <LinearLayout style="@style/StatCard">
 
@@ -355,7 +186,7 @@
 
                 <TextView
                     style="@style/StatLabel"
-                    android:text="alarme\noprite" />
+                    android:text="alarme&#10;oprite" />
 
             </LinearLayout>
 
@@ -367,12 +198,12 @@
 
                 <TextView
                     style="@style/StatNumber"
-                    android:text="5\nzile"
-                    android:lineSpacingExtra="-4dp" />
+                    android:lineSpacingExtra="-4dp"
+                    android:text="5&#10;zile" />
 
                 <TextView
                     style="@style/StatLabel"
-                    android:text="la\nrând" />
+                    android:text="la&#10;rând" />
 
             </LinearLayout>
 
@@ -388,23 +219,22 @@
 
                 <TextView
                     style="@style/StatLabel"
-                    android:text="săptămâna\nasta" />
+                    android:text="săptămâna&#10;asta" />
 
             </LinearLayout>
 
         </LinearLayout>
 
-        <!-- Bottom circle -->
         <TextView
             android:layout_width="42dp"
             android:layout_height="42dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="-18dp"
+            android:background="@drawable/bg_bottom_circle"
             android:gravity="center"
             android:text="↓"
             android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:background="@drawable/bg_bottom_circle"
-            android:layout_marginTop="-18dp" />
+            android:textSize="20sp" />
 
     </LinearLayout>
 

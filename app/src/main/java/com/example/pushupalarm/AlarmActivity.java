@@ -56,11 +56,13 @@ public class AlarmActivity extends AppCompatActivity {
     private int invalidFrames = 0;
 
     private boolean challengeCompleted = false;
+    private int alarmId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
+        alarmId = getIntent().getIntExtra("alarm_id", -1);
 
         previewView = findViewById(R.id.previewView);
         poseStatusText = findViewById(R.id.poseStatusText);
@@ -334,8 +336,9 @@ public class AlarmActivity extends AppCompatActivity {
         stopAlarmSound();
 
         Intent intent = new Intent(this, SuccessActivity.class);
-        startActivity(intent);
+        intent.putExtra("alarm_id", alarmId);
 
+        startActivity(intent);
         finish();
     }
 

@@ -15,8 +15,9 @@
         android:paddingTop="34dp"
         android:paddingBottom="28dp">
 
-        <!-- Fake status / time -->
+        <!-- Status / time -->
         <TextView
+            android:id="@+id/successCurrentTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="07:00"
@@ -132,12 +133,14 @@
                         android:text="ora alarmei" />
 
                     <TextView
+                        android:id="@+id/successAlarmDate"
                         style="@style/AchievementSub"
-                        android:text="joi, 21 mai" />
+                        android:text="data" />
 
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/successAlarmTime"
                     style="@style/AchievementValue"
                     android:text="07:00" />
 
