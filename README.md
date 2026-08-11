@@ -8,15 +8,15 @@ Instead of letting the user dismiss the alarm immediately, the app opens the fro
 
 ### Alarm Management
 
-<img src="docs/screenshots/NoSnooze_main_page.png" width="300">
+<img src="screenshots/NoSnooze_main_page.png" width="300">
 
 ### Wake-up Challenge
 
-<img src="docs/screenshots/NoSnooze_camera_page.png" width="300">
+<img src="screenshots/NoSnooze_camera_page.png" width="300">
 
 ### Challenge Completed
 
-<img src="docs/screenshots/NoSnooze_completion_page.png" width="300">
+<img src="screenshots/NoSnooze_completion_page.png" width="300">
 
 ## Features
 
