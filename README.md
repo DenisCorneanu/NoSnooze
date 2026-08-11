@@ -2,7 +2,7 @@
 
 NoSnooze is an Android alarm app that makes waking up harder to ignore.
 
-Instead of letting the user dismiss the alarm immediately, the app opens the front camera and requires the user to hold a push-up position for 15 seconds. The position is detected in real time using Google ML Kit Pose Detection.
+Instead of letting the user dismiss the alarm immediately, the app opens the front camera and requires the user to do push-ups for 15 seconds. The position is detected in real time using Google ML Kit Pose Detection.
 
 ## Features
 
@@ -26,7 +26,7 @@ Instead of letting the user dismiss the alarm immediately, the app opens the fro
 4. The alarm sound starts and the front camera is activated.
 5. Camera frames are analyzed using Google ML Kit Pose Detection.
 6. The app checks several body landmarks to determine whether the user is in a push-up-like position.
-7. The position must remain valid for 15 seconds.
+7. The position must remain valid for 15 seconds, if not  the timer decreases from 15 seconds to 0.
 8. Once the challenge is completed, the alarm stops and the success screen is displayed.
 
 ## Tech Stack
